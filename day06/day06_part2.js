@@ -20,7 +20,7 @@ const groupAnswersEventEmitter = createGroupAnswersEmitter(fileInputReader)
 let sum = 0;
 
 groupAnswersEventEmitter.on('group_answers', answers => {
-  const answersMap = countLetters(answers.flatMap(Array.from))
+  const answersMap = countLetters(answers.flatMap(a => Array.from(a)))
 
   for (const [letter, count] of answersMap) {
     if (count === answers.length) {
