@@ -1,0 +1,25 @@
+name: Benchmark
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        shell: bash -l -eo pipefail {0}
+        run: nvm install
+
+      - name: Install benchmarking tool
+        run: cargo install hyperfine
+
+      - name: Run benchmark
+        run: |
+          'ls' day*/day*_part*.js | xargs -t -I{} hyperfine --warmup 10 --min-runs 100 'node {}'
